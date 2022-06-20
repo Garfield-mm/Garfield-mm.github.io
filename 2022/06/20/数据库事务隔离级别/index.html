@@ -5,12 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>归档: 2022</title>
+    <title>数据库事务隔离级别 - 愤怒的菜鸟</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="不进则退，不喜则忧，不得则亡，此世人之常。,"> 
+    <meta name="description" content="不进则退，不喜则忧，不得则亡，此世人之常。,脏读脏读针对update操作（主要是回滚）
+两个事务A和B，A修改了数据，B读取A修改后的数据，A回滚了，B就出现了脏数据。
+不可重复读一个事务范围内，A读取完数据后，B修改了该数据并提交了事务，A,"> 
     <meta name="author" content="加菲猫"> 
     <link rel="alternative" href="atom.xml" title="愤怒的菜鸟" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -18,16 +20,20 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="归档: 2022"/>
-    <meta name="twitter:description" content="不进则退，不喜则忧，不得则亡，此世人之常。,"/>
+    <meta name="twitter:title" content="数据库事务隔离级别 - 愤怒的菜鸟"/>
+    <meta name="twitter:description" content="不进则退，不喜则忧，不得则亡，此世人之常。,脏读脏读针对update操作（主要是回滚）
+两个事务A和B，A修改了数据，B读取A修改后的数据，A回滚了，B就出现了脏数据。
+不可重复读一个事务范围内，A读取完数据后，B修改了该数据并提交了事务，A,"/>
     
     
     
     
     <meta property="og:site_name" content="愤怒的菜鸟"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="归档: 2022"/>
-    <meta property="og:description" content="不进则退，不喜则忧，不得则亡，此世人之常。,"/>
+    <meta property="og:title" content="数据库事务隔离级别 - 愤怒的菜鸟"/>
+    <meta property="og:description" content="不进则退，不喜则忧，不得则亡，此世人之常。,脏读脏读针对update操作（主要是回滚）
+两个事务A和B，A修改了数据，B读取A修改后的数据，A回滚了，B就出现了脏数据。
+不可重复读一个事务范围内，A读取完数据后，B修改了该数据并提交了事务，A,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -37,39 +43,79 @@
 <body class="loading">
     <span id="config-title" style="display:none">愤怒的菜鸟</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
-                    <div class="timeline">
-                      <h2 class="timeline-title">归档: 2篇</h2><hr>
-                      
-                      
-                        
-                          <h3 class="timeline-subtitle">2022</h3>
-                        
-                        <div class="timeline-item">
-                          <time>2022-06-20</time>
-                          <a target="_self" href="/2022/06/20/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">数据库事务隔离级别</a>
-                        </div>
-                      
-                        
-                        <div class="timeline-item">
-                          <time>2022-06-20</time>
-                          <a target="_self" href="/2022/06/20/hello-world/">Hello World</a>
-                        </div>
-                      
-                    </div>
-                </div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">数据库事务隔离级别</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
             </div>
+            <div id="qr"></div>
         </div>
     </div>
+    <div class="scrollbar"></div>
 </div>
 
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">数据库事务隔离级别</h1>
+        <div class="stuff">
+            <span>六月 20, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h3><p>脏读针对update操作（主要是回滚）</p>
+<p>两个事务A和B，A修改了数据，B读取A修改后的数据，A回滚了，B就出现了脏数据。</p>
+<h3 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h3><p>一个事务范围内，A读取完数据后，B修改了该数据并提交了事务，A第二次读取该数据与第一次的数据不一致。</p>
+<p>（一条数据的不一致）</p>
+<h3 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h3><p>类似不可重复读</p>
+<p>幻读的范围更大是一个表数据的不一致</p>
+<p>(多条数据的不一致)</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
 </body>
 
 

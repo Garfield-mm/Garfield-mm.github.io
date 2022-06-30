@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vue 计算属性和侦听器 - 愤怒的菜鸟</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="不进则退，不喜则忧，不得则亡，此世人之常。,1 计算属性computed，每一个计算属性都包含一个getter和一个setter。
+1234567891011121314151617181920212223242526272829303132,"> 
+    <meta name="author" content="愤怒的菜鸟"> 
+    <link rel="alternative" href="atom.xml" title="愤怒的菜鸟" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Vue 计算属性和侦听器 - 愤怒的菜鸟"/>
+    <meta name="twitter:description" content="不进则退，不喜则忧，不得则亡，此世人之常。,1 计算属性computed，每一个计算属性都包含一个getter和一个setter。
+1234567891011121314151617181920212223242526272829303132,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="愤怒的菜鸟"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Vue 计算属性和侦听器 - 愤怒的菜鸟"/>
+    <meta property="og:description" content="不进则退，不喜则忧，不得则亡，此世人之常。,1 计算属性computed，每一个计算属性都包含一个getter和一个setter。
+1234567891011121314151617181920212223242526272829303132,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">愤怒的菜鸟</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Vue 计算属性和侦听器</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Vue 计算属性和侦听器</h1>
+        <div class="stuff">
+            <span>六月 30, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="1-计算属性"><a href="#1-计算属性" class="headerlink" title="1 计算属性"></a>1 计算属性</h1><p>computed，每一个计算属性都包含一个<code>getter</code>和一个<code>setter</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>&#123;&#123; reversedMessage &#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span>&#123;&#123; fullName &#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">message</span>: <span class="string">&#x27;Hello&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">firstName</span>: <span class="string">&#x27;Foo&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">lastName</span>: <span class="string">&#x27;Bar&#x27;</span></span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">computed</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 计算属性的 getter</span></span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">reversedMessage</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">message</span>.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reverse</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">            </span></span><br><span class="line"><span class="language-javascript">            <span class="attr">fullName</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">            	<span class="comment">// getter</span></span></span><br><span class="line"><span class="language-javascript">           		<span class="title function_">get</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                	<span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstName</span> + <span class="string">&#x27; &#x27;</span> + <span class="variable language_">this</span>.<span class="property">lastName</span></span></span><br><span class="line"><span class="language-javascript">            	&#125;,</span></span><br><span class="line"><span class="language-javascript">            	<span class="comment">// setter</span></span></span><br><span class="line"><span class="language-javascript">            	<span class="title function_">set</span>(<span class="params">newValue</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">              		<span class="keyword">var</span> name = newValue.<span class="title function_">split</span>(<span class="string">&#x27; &#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">                	<span class="variable language_">this</span>.<span class="property">firstName</span> = names[<span class="number">0</span>]</span></span><br><span class="line"><span class="language-javascript">                	<span class="variable language_">this</span>.<span class="property">lastName</span> = names[names.<span class="property">length</span> - <span class="number">1</span>]</span></span><br><span class="line"><span class="language-javascript">            	&#125;</span></span><br><span class="line"><span class="language-javascript">        	&#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="2-侦听属性"><a href="#2-侦听属性" class="headerlink" title="2 侦听属性"></a>2 侦听属性</h1><p>watch，侦听器，一个对象，键是需要观察的表达式，值是对应回调函数、方法名或者包含选项的对象。Vue实例会在实例化时调用<code>$watch()</code> ，遍历<code>watch</code> 对象的每一个property。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;mydata&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">mydata</span>: <span class="string">&#x27;mydata&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">a</span>: <span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">b</span>: <span class="number">2</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">c</span>: <span class="number">3</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">d</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">e</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="attr">f</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">                        <span class="attr">g</span>: <span class="number">5</span></span></span><br><span class="line"><span class="language-javascript">                    &#125;</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">watch</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 使用watch来响应数据的变化</span></span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">mydata</span>(<span class="params">newVal, oldVal</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;最新值是：&#x27;</span> + newVal, <span class="string">&quot;原来的值是：&quot;</span> + oldVal)</span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">a</span>: <span class="keyword">function</span>(<span class="params">val, oldVal</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;new: %s, old: %s&#x27;</span>, val, oldVal)</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">b</span>: <span class="string">&#x27;someMethod&#x27;</span>, <span class="comment">// 方法名</span></span></span><br><span class="line"><span class="language-javascript">            <span class="attr">c</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">            	<span class="attr">handler</span>: <span class="keyword">function</span>(<span class="params">val, oldVal</span>) &#123;&#125;,</span></span><br><span class="line"><span class="language-javascript">        		<span class="attr">deep</span>: <span class="literal">true</span> <span class="comment">// 该回调会在任何侦听的对象的property改变时被调用，不论其被嵌套多深</span></span></span><br><span class="line"><span class="language-javascript">        	&#125;,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">d</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">handler</span>: <span class="string">&#x27;someMethod&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">immediate</span>: <span class="literal">true</span> <span class="comment">// 该回调将会在侦听开始之后被立即调用</span></span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">e</span>: [</span></span><br><span class="line"><span class="language-javascript">                <span class="string">&#x27;handle1&#x27;</span>, <span class="comment">// 可以传入回调数组，它们会被逐一调用</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">function</span> <span class="title function_">handle2</span>(<span class="params">val, oldVal</span>) &#123;&#125;,</span></span><br><span class="line"><span class="language-javascript">                &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="attr">handler</span>: <span class="keyword">function</span> <span class="title function_">handle3</span>(<span class="params">val, oldVal</span>) &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">                &#125;    </span></span><br><span class="line"><span class="language-javascript">            ],</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&#x27;e.f&#x27;</span>: <span class="keyword">function</span>(<span class="params">val, oldVal</span>) &#123;&#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

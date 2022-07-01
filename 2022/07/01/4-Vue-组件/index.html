@@ -121,8 +121,42 @@ kebab-case（短横线分隔命名）
 
 <p><code>components</code> 中<code>uniBadge</code> 是 <code>uniBadge:uniBadge</code>的缩写。</p>
 <ul>
-<li>通过uni-app的easycom直接导入：组件在<code>components</code> 目录下，符合<code>components/组件名称/组件名称.vue</code>结构</li>
+<li>通过uni-app的easycom直接导入：组件在<code>components</code> 目录下，符合<code>components/组件名称/组件名称.vue</code>结构。</li>
 </ul>
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><p><code>props</code> 用于接收父组件的数据，可以是数组或对象。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th align="center">选项</th>
+<th align="center">类型</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">type</td>
+<td align="center"><code>String</code> 、<code>Number</code> 、<code>Boolean</code>、 <code>Array</code>、 <code>Object</code>、 <code>Date</code> 、<code>Function</code>、 <code>Symbol</code></td>
+<td align="center"><code>prop</code>的类型</td>
+</tr>
+<tr>
+<td align="center">default</td>
+<td align="center">any</td>
+<td align="center"><code>prop</code>的默认值</td>
+</tr>
+<tr>
+<td align="center">required</td>
+<td align="center">Boolean</td>
+<td align="center">是否必填项</td>
+</tr>
+<tr>
+<td align="center">validator</td>
+<td align="center">Function</td>
+<td align="center">自定义验证函数</td>
+</tr>
+</tbody></table>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
